@@ -1,0 +1,34 @@
+customers/_customer.html.erb
+<div class="card" style="margin-bottom: 20px;">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-64x64">
+          <% if customer.image.attached? %>
+            <%= image_tag customer.image, class: "is-rounded" %>
+          <% else %>
+            <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+              <span class="icon is-large">
+                <i class="fas fa-user fa-2x"></i>
+              </span>
+            </div>
+          <% end %>
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4"><%= customer.full_name %></p>
+        <p class="subtitle is-6">
+          <strong>phone:</strong> <%= customer.phone_number %><br>
+          <% if customer.email_address.present? %>
+            <strong>email:</strong> <%= customer.email_address %><br>
+          <% else %>
+            <strong>email:</strong> <em>not provided</em><br>
+          <% end %>
+          <% if customer.notes.present? %>
+            <strong>notes:</strong> <%= customer.notes %>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

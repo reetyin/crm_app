@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Run Rails server",
+			"command": "bin/rails server",
+			"isBackground": true,
+			"group": "build"
+		}
+	]
+}
