@@ -1,0 +1,79 @@
+<%# encoding: utf-8 %>
+<div class="container">
+  <div class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <h1 class="title">Edit Customer</h1>
+      </div>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <div class="buttons">
+          <%= link_to "View", @customer, class: "button is-info" %>
+          <%= link_to "Back to List", customers_path, class: "button is-light" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <%= form_with model: @customer, local: true do |form| %>
+        <% if @customer.errors.any? %>
+          <div class="notification is-danger">
+            <strong><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</strong>
+            <ul>
+              <% @customer.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="field">
+          <%= form.label :full_name, class: "label" %>
+          <div class="control">
+            <%= form.text_field :full_name, class: "input" %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label :phone_number, class: "label" %>
+          <div class="control">
+            <%= form.text_field :phone_number, class: "input" %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label :email_address, class: "label" %>
+          <div class="control">
+            <%= form.email_field :email_address, class: "input" %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label :notes, class: "label" %>
+          <div class="control">
+            <%= form.text_area :notes, class: "textarea", rows: 3 %>
+          </div>
+          <p class="help">Note: Image upload is available in the admin panel at <a href="/admin/customers">Admin Dashboard</a></p>
+        </div>
+
+        <div class="field is-grouped">
+          <div class="control">
+            <%= form.submit "Update Customer", class: "button is-primary" %>
+          </div>
+          <div class="control">
+            <%= link_to "Cancel", @customer, class: "button is-light" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="buttons" style="margin-top: 20px;">
+    <%= link_to "All Customers", customers_path, class: "button is-light" %>
+    <%= link_to "Alphabetized View", customers_alphabetized_path, class: "button is-primary" %>
+    <%= link_to "Missing Email View", customers_missing_email_path, class: "button is-warning" %>
+  </div>
+</div>

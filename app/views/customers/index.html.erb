@@ -1,16 +1,31 @@
 <%# encoding: utf-8 %>
 <!-- filepath: app/views/customers/index.html.erb -->
 <div class="container">
-  <h1 class="title">All Customers</h1>
-  <div class="buttons">
-    <%= link_to "Alphabetized View", customers_alphabetized_path, class: "button is-primary" %>
-    <%= link_to "Missing Email View", customers_missing_email_path, class: "button is-warning" %>
+  <div class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <h1 class="title">All Customers</h1>
+      </div>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <div class="buttons">
+          <%= link_to "Alphabetized View", customers_alphabetized_path, class: "button is-primary" %>
+          <%= link_to "Missing Email View", customers_missing_email_path, class: "button is-warning" %>
+        </div>
+      </div>
+    </div>
   </div>
-  <% @customers.each do |customer| %>
-    <%= render partial: "customer", locals: { customer: customer } %>
-  <% end %>
+
+  <div class="customers-grid">
+    <% @customers.each do |customer| %>
+      <%= render partial: "customer", locals: { customer: customer } %>
+    <% end %>
+  </div>
+
   <div class="buttons" style="margin-top: 20px;">
     <%= link_to "All Customers", root_path, class: "button is-light" %>
     <%= link_to "Alphabetized View", customers_alphabetized_path, class: "button is-primary" %>
     <%= link_to "Missing Email View", customers_missing_email_path, class: "button is-warning" %>
   </div>
+</div>

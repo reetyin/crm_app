@@ -4,11 +4,23 @@
     <div class="media">
       <div class="media-left">
         <figure class="image is-64x64">
-          <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
-            <span class="icon is-large">
-              <i class="fas fa-user fa-2x"></i>
-            </span>
-          </div>
+          <% if customer.image_attached_safely? %>
+            <% begin %>
+              <%= image_tag customer.image, class: "is-rounded", style: "width: 64px; height: 64px; object-fit: cover;" %>
+            <% rescue StandardError %>
+              <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                <span class="icon is-large">
+                  <i class="fas fa-exclamation-triangle fa-2x has-text-warning"></i>
+                </span>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+              <span class="icon is-large">
+                <i class="fas fa-user fa-2x"></i>
+              </span>
+            </div>
+          <% end %>
         </figure>
       </div>
       <div class="media-content">
@@ -24,6 +36,12 @@
             <strong>notes:</strong> <%= customer.notes %>
           <% end %>
         </p>
+      </div>
+      <div class="media-right">
+        <div class="buttons">
+          <%= link_to "View", customer, class: "button is-small is-info" %>
+          <%= link_to "Edit", edit_customer_path(customer), class: "button is-small is-primary" %>
+        </div>
       </div>
     </div>
   </div>

@@ -30,5 +30,5 @@ Rails.application.routes.draw do
   root "customers#index"
   get "customers/alphabetized", to: "customers#alphabetized", as: "customers_alphabetized"
   get "customers/missing_email", to: "customers#missing_email", as: "customers_missing_email"
-  resources :customers, only: [ :index ]
+  resources :customers, only: [ :index, :show, :edit, :update ]
 end

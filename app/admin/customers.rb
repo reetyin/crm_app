@@ -2,7 +2,7 @@
 
 ActiveAdmin.register Customer do
   # Define permitted parameters
-  permit_params :full_name, :phone_number, :email_address, :notes
+  permit_params :full_name, :phone_number, :email_address, :notes, :image
 
   # Configure menu
   menu label: "Customers", priority: 1
@@ -18,6 +18,17 @@ ActiveAdmin.register Customer do
   index title: "All Customers" do
     selectable_column
     id_column
+    column "Avatar", :image do |customer|
+      begin
+        if customer.image_attached_safely?
+          image_tag customer.image, size: "50x50", style: "border-radius: 50%;"
+        else
+          span "No Image", class: "status_tag"
+        end
+      rescue
+        span "Image Error", class: "status_tag error"
+      end
+    end
     column "Full Name", :full_name
     column "Phone", :phone_number
     column "Email", :email_address
@@ -35,6 +46,8 @@ ActiveAdmin.register Customer do
       f.input :phone_number, label: "Phone Number", hint: "Enter phone number (e.g., 123-456-7890)"
       f.input :email_address, label: "Email Address", hint: "Enter valid email address"
       f.input :notes, label: "Notes", as: :text, hint: "Additional notes about the customer"
+
+      f.input :image, as: :file, hint: "Upload a profile image for the customer"
     end
     f.actions
   end
@@ -42,6 +55,17 @@ ActiveAdmin.register Customer do
   # Configure show page
   show title: :full_name do
     attributes_table do
+      row "Profile Image" do |customer|
+        begin
+          if customer.image_attached_safely?
+            image_tag customer.image, size: "150x150", style: "border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+          else
+            span "No profile image uploaded", class: "status_tag"
+          end
+        rescue
+          span "Image Error - Please re-upload", class: "status_tag error"
+        end
+      end
       row "Full Name" do |customer|
         strong customer.full_name
       end

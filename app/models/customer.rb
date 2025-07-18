@@ -7,6 +7,29 @@ class Customer < ApplicationRecord
   validates :phone_number, presence: true
   validates :email_address, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
 
+  # Safe method to check if image is attached (Rails 8 compatibility)
+  def image_attached_safely?
+    begin
+      image.attached?
+    rescue ActiveRecord::InverseOfAssociationNotFoundError
+      false
+    rescue StandardError
+      false
+    end
+  end
+
+  # Safe method to get image URL (Rails 8 compatibility)
+  def safe_image_url
+    begin
+      return nil unless image.attached?
+      Rails.application.routes.url_helpers.url_for(image)
+    rescue ActiveRecord::InverseOfAssociationNotFoundError
+      nil
+    rescue StandardError
+      nil
+    end
+  end
+
   # Allowlist associations for Ransack (ActiveAdmin filtering)
   def self.ransackable_associations(auth_object = nil)
     []

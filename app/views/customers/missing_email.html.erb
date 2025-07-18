@@ -1,20 +1,34 @@
 <%# encoding: utf-8 %>
 <!-- filepath: app/views/customers/missing_email.html.erb -->
 <div class="container">
-  <h1 class="title">Customers with Missing Email</h1>
-  <div class="buttons">
-    <%= link_to "All Customers", customers_path, class: "button is-info" %>
-    <%= link_to "Alphabetized View", customers_alphabetized_path, class: "button is-primary" %>
-  </div>
-  <% if @customers.any? %>
-    <% @customers.each do |customer| %>
-      <%= render partial: "customer", locals: { customer: customer } %>
-    <% end %>
-  <% else %>
-    <div class="notification is-info">
-      <p>No customers found with missing email addresses.</p>
+  <div class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <h1 class="title">Customers with Missing Email</h1>
+      </div>
     </div>
-  <% end %>
+    <div class="level-right">
+      <div class="level-item">
+        <div class="buttons">
+          <%= link_to "All Customers", customers_path, class: "button is-info" %>
+          <%= link_to "Alphabetized View", customers_alphabetized_path, class: "button is-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="customers-grid">
+    <% if @customers.any? %>
+      <% @customers.each do |customer| %>
+        <%= render partial: "customer", locals: { customer: customer } %>
+      <% end %>
+    <% else %>
+      <div class="notification is-info">
+        <p>No customers found with missing email addresses.</p>
+      </div>
+    <% end %>
+  </div>
+
   <div class="buttons" style="margin-top: 20px;">
     <%= link_to "All Customers", customers_path, class: "button is-info" %>
     <%= link_to "Alphabetized View", customers_alphabetized_path, class: "button is-primary" %>
