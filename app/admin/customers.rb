@@ -2,7 +2,7 @@
 
 ActiveAdmin.register Customer do
   # Define permitted parameters
-  permit_params :full_name, :phone_number, :email_address, :notes, :image
+  permit_params :full_name, :phone_number, :email_address, :notes
 
   # Configure menu
   menu label: "Customers", priority: 1
@@ -18,17 +18,6 @@ ActiveAdmin.register Customer do
   index title: "All Customers" do
     selectable_column
     id_column
-    column "Image" do |customer|
-      if customer.has_image?
-        begin
-          image_tag customer.image, size: "50x50", class: "rounded", style: "object-fit: cover;"
-        rescue
-          "Image Error"
-        end
-      else
-        "No Image"
-      end
-    end
     column "Full Name", :full_name
     column "Phone", :phone_number
     column "Email", :email_address
@@ -42,9 +31,6 @@ ActiveAdmin.register Customer do
   # Configure form
   form title: "Customer" do |f|
     f.inputs "Customer Details" do
-      # 暂时禁用图片上传以避免 Rails 8 inverse association 问题
-      # f.input :image, as: :file, label: "Profile Image",
-      #         hint: "Upload a profile image for the customer (JPG, PNG, GIF)"
       f.input :full_name, label: "Full Name", hint: "Enter customer's full name"
       f.input :phone_number, label: "Phone Number", hint: "Enter phone number (e.g., 123-456-7890)"
       f.input :email_address, label: "Email Address", hint: "Enter valid email address"
@@ -56,17 +42,6 @@ ActiveAdmin.register Customer do
   # Configure show page
   show title: :full_name do
     attributes_table do
-      row "Profile Image" do |customer|
-        if customer.has_image?
-          begin
-            image_tag customer.image, size: "150x150", class: "rounded"
-          rescue
-            "Image unavailable"
-          end
-        else
-          "No image uploaded"
-        end
-      end
       row "Full Name" do |customer|
         strong customer.full_name
       end

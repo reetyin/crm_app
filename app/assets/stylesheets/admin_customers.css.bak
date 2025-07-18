@@ -1,0 +1,84 @@
+/* Custom Active Admin styles for image upload */
+
+/* Image upload form styling */
+.admin_customer form .formtastic fieldset ol li.file {
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.admin_customer form .formtastic fieldset ol li.file:hover {
+  border-color: #007bff;
+  background: #e3f2fd;
+}
+
+.admin_customer form .formtastic fieldset ol li.file input[type="file"] {
+  border: none;
+  background: transparent;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.admin_customer form .formtastic fieldset ol li.file label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 10px;
+}
+
+.admin_customer form .formtastic fieldset ol li.file p.inline-hints {
+  color: #6c757d;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* Image display in admin index */
+.admin_customers .index_table td img {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.admin_customers .index_table td img:hover {
+  transform: scale(1.1);
+}
+
+/* Show page image styling */
+.admin_customer .attributes_table td img {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.admin_customer .attributes_table td img:hover {
+  transform: scale(1.05);
+}
+
+/* User placeholder in admin */
+.admin_customer .user-placeholder {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Form improvements */
+.admin_customer form .formtastic fieldset {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.admin_customer form .formtastic fieldset legend {
+  background: #f8f9fa;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #495057;
+  font-weight: 600;
+}

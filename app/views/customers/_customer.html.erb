@@ -4,18 +4,11 @@
     <div class="media">
       <div class="media-left">
         <figure class="image is-64x64">
-          <% if customer.has_image? %>
-            <%= image_tag customer.image, 
-                          alt: customer.full_name, 
-                          class: "is-rounded",
-                          style: "width: 64px; height: 64px; object-fit: cover;" %>
-          <% else %>
-            <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
-              <span class="icon is-large">
-                <i class="fas fa-user fa-2x"></i>
-              </span>
-            </div>
-          <% end %>
+          <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+            <span class="icon is-large">
+              <i class="fas fa-user fa-2x"></i>
+            </span>
+          </div>
         </figure>
       </div>
       <div class="media-content">
