@@ -2,7 +2,7 @@
 
 ActiveAdmin.register Customer do
   # Define permitted parameters
-  permit_params :full_name, :phone_number, :email_address, :notes, :image
+  permit_params :full_name, :phone_number, :email_address, :notes
 
   # Configure menu
   menu label: "Customers", priority: 1
@@ -47,7 +47,13 @@ ActiveAdmin.register Customer do
       f.input :email_address, label: "Email Address", hint: "Enter valid email address"
       f.input :notes, label: "Notes", as: :text, hint: "Additional notes about the customer"
 
-      f.input :image, as: :file, hint: "Upload a profile image for the customer"
+      # Note: Image uploads can be managed through Rails console due to Rails 8 compatibility
+      f.li do
+        label "Profile Image"
+        para "Image upload is available through Rails console commands:"
+        para "customer = Customer.find(#{f.object.id || 'ID'}); customer.image.attach(io: File.open('path/to/image.jpg'), filename: 'image.jpg')"
+        para "Images will display automatically once attached."
+      end
     end
     f.actions
   end
