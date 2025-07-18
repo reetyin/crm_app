@@ -1,24 +1,174 @@
 // app/assets/stylesheets/customer.scss
-.card {
-  box-shadow: 0 2px 3px rgba(10,10,10,0.1), 0 0 0 1px rgba(10,10,10,0.1);
-  border-radius: 6px;
+
+// Customer cards styling
+.customers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
 }
+
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  background: white;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+}
+
 .card-content {
   padding: 1.5rem;
 }
+
 .media {
   display: flex;
   align-items: flex-start;
+  gap: 1rem;
 }
+
 .media-left {
-  margin-right: 1rem;
+  flex-shrink: 0;
 }
+
+.media-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.media-right {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Image styling
+.image.is-64x64 {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Typography
 .title.is-4 {
   margin-bottom: 0.5rem;
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 1.25rem;
 }
+
 .subtitle.is-6 {
-  color: #888;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  
+  strong {
+    color: #374151;
+    font-weight: 600;
+  }
+  
+  em {
+    color: #9ca3af;
+    font-style: italic;
+  }
 }
+
+// Buttons
 .button {
   margin-right: 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+// Page headers
+.level {
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.title {
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+// Navigation buttons at bottom
+.buttons:last-child {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  justify-content: center;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .customers-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .media {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .media-right {
+    margin-top: 1rem;
+  }
+  
+  .buttons {
+    justify-content: center;
+  }
+}
+
+// Notification styling
+.notification {
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  
+  &.is-info {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+  }
+}
+
+// Empty state styling
+.empty {
+  color: #9ca3af;
+  font-style: italic;
 }

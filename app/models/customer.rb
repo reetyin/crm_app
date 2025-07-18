@@ -30,6 +30,45 @@ class Customer < ApplicationRecord
     end
   end
 
+  # Manual image upload method for Rails 8 compatibility
+  def upload_image_from_file(file_path, filename = nil)
+    begin
+      # Use a simpler approach - create the file in storage directly
+      key = SecureRandom.uuid
+      filename = filename || File.basename(file_path)
+      
+      # Copy file to storage location
+      storage_path = Rails.root.join('storage', key)
+      FileUtils.mkdir_p(File.dirname(storage_path))
+      FileUtils.cp(file_path, storage_path)
+      
+      # Create blob record
+      blob = ActiveStorage::Blob.create!(
+        key: key,
+        filename: filename,
+        content_type: 'image/jpeg',
+        service_name: 'local',
+        byte_size: File.size(file_path)
+      )
+      
+      # Create attachment
+      attachment = ActiveStorage::Attachment.create!(
+        name: 'image',
+        record_type: 'Customer',
+        record_id: self.id,
+        blob_id: blob.id
+      )
+      
+      # Clear cached instance
+      @active_storage_attached = nil if defined?(@active_storage_attached)
+      
+      true
+    rescue => e
+      Rails.logger.error "Image upload failed: #{e.message}"
+      false
+    end
+  end
+
   # Allowlist associations for Ransack (ActiveAdmin filtering)
   def self.ransackable_associations(auth_object = nil)
     []

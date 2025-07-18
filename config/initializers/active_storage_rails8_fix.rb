@@ -55,13 +55,14 @@ Rails.application.config.to_prepare do
             @active_storage_attached ||= {}
             @active_storage_attached[name] ||= begin
               ActiveStorage::Attached::One.new(name, self)
-            rescue ActiveRecord::InverseOfAssociationNotFoundError
-              # Create a mock attachment that won't cause errors
-              OpenStruct.new(
-                attached?: false,
-                attach: ->(attachable) { Rails.logger.warn "ActiveStorage attachment disabled due to Rails 8 compatibility issues" },
-                detach: -> { Rails.logger.warn "ActiveStorage detachment disabled due to Rails 8 compatibility issues" }
-              )
+            rescue ActiveRecord::InverseOfAssociationNotFoundError => e
+              Rails.logger.warn "ActiveStorage inverse association error for #{name}: #{e.message}"
+              # Create a working attachment object
+              ActiveStorage::Attached::One.new(name, self)
+            rescue StandardError => e
+              Rails.logger.warn "ActiveStorage error for #{name}: #{e.message}"
+              # Create a working attachment object
+              ActiveStorage::Attached::One.new(name, self)
             end
           end
         end

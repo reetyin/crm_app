@@ -64,3 +64,4 @@ end
 gem 'activeadmin'
 gem 'devise'
 gem 'bulma-rails'
+gem 'chunky_png'
