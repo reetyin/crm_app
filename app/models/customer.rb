@@ -9,11 +9,18 @@ class Customer < ApplicationRecord
 
   # Allowlist associations for Ransack (ActiveAdmin filtering)
   def self.ransackable_associations(auth_object = nil)
-    []
+    # 添加 image_attachment 和 image_blob 到允许的关联中
+    [ "image_attachment", "image_blob" ]
   end
 
   # Allowlist attributes for Ransack (ActiveAdmin filtering)
   def self.ransackable_attributes(auth_object = nil)
     [ "id", "full_name", "phone_number", "email_address", "notes", "created_at", "updated_at" ]
+  end
+
+  # 安全检查图片是否存在的方法
+  def has_image?
+    # 暂时总是返回 false，直到解决 Rails 8 的 inverse association 问题
+    false
   end
 end
