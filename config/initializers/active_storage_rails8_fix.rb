@@ -33,6 +33,10 @@ Rails.application.config.to_prepare do
           rescue ActiveRecord::InverseOfAssociationNotFoundError
             # Fallback: check if attachment exists in database
             ActiveStorage::Attachment.exists?(name: name, record: record)
+          rescue StandardError => e
+            Rails.logger.warn "ActiveStorage attached? error: #{e.message}"
+            # Fallback: check if attachment exists in database
+            ActiveStorage::Attachment.exists?(name: name, record: record)
           end
         end
       end

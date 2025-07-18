@@ -47,8 +47,18 @@ ActiveAdmin.register Customer do
       f.input :email_address, label: "Email Address", hint: "Enter valid email address"
       f.input :notes, label: "Notes", as: :text, hint: "Additional notes about the customer"
 
-      # Image upload field with custom handling
-      f.input :image, as: :file, hint: "Upload a profile image for the customer", input_html: { accept: 'image/*' }
+      # Custom image upload field to work around Rails 8 compatibility issues
+      f.li do
+        label "Profile Image"
+        if f.object.image_attached_safely?
+          div style: "margin-bottom: 10px;" do
+            image_tag f.object.image, size: "100x100", style: "border-radius: 8px; border: 2px solid #e5e7eb;"
+          end
+        end
+        # Use raw HTML input to avoid Active Admin's file input issues
+        raw '<input type="file" name="customer[image]" accept="image/*" style="margin-top: 5px; width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">'
+        para "Upload a new image to replace the current one (if any).", style: "color: #6b7280; font-size: 0.875rem; margin-top: 5px;"
+      end
     end
     f.actions
   end

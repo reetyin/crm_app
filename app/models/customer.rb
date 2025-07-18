@@ -33,16 +33,32 @@ class Customer < ApplicationRecord
   # Manual image upload method for Rails 8 compatibility
   def upload_image_from_file(file_path, filename = nil)
     begin
-      # Try to use standard Active Storage method
-      if respond_to?(:image=)
-        self.image = File.open(file_path)
-        save!
-        true
-      else
-        # Fallback to manual method
-        Rails.logger.warn "Using fallback image upload method"
-        false
-      end
+      # Create blob manually
+      blob = ActiveStorage::Blob.create!(
+        key: SecureRandom.uuid,
+        filename: filename || File.basename(file_path),
+        content_type: 'image/jpeg',
+        service_name: 'local',
+        byte_size: File.size(file_path)
+      )
+
+      # Copy file to storage location manually
+      storage_path = Rails.root.join('storage', blob.key)
+      FileUtils.mkdir_p(File.dirname(storage_path))
+      FileUtils.cp(file_path, storage_path)
+
+      # Create attachment manually
+      ActiveStorage::Attachment.create!(
+        name: 'image',
+        record_type: 'Customer',
+        record_id: self.id,
+        blob_id: blob.id
+      )
+
+      # Clear cached instance
+      @active_storage_attached = nil if defined?(@active_storage_attached)
+
+      true
     rescue => e
       Rails.logger.error "Image upload failed: #{e.message}"
       Rails.logger.error e.backtrace.first(5)
