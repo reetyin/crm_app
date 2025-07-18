@@ -2,7 +2,7 @@
 
 ActiveAdmin.register Customer do
   # Define permitted parameters
-  permit_params :full_name, :phone_number, :email_address, :notes
+  permit_params :full_name, :phone_number, :email_address, :notes, :image
 
   # Configure menu
   menu label: "Customers", priority: 1
@@ -18,6 +18,13 @@ ActiveAdmin.register Customer do
   index title: "All Customers" do
     selectable_column
     id_column
+    column "Image", :image do |customer|
+      if customer.image.attached?
+        image_tag customer.image, style: "width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
+      else
+        content_tag :span, "No Image", class: "text-muted"
+      end
+    end
     column "Full Name", :full_name
     column "Phone", :phone_number
     column "Email", :email_address
@@ -35,6 +42,7 @@ ActiveAdmin.register Customer do
       f.input :phone_number, label: "Phone Number", hint: "Enter phone number (e.g., 123-456-7890)"
       f.input :email_address, label: "Email Address", hint: "Enter valid email address"
       f.input :notes, label: "Notes", as: :text, hint: "Additional notes about the customer"
+      f.input :image, label: "Profile Image", as: :file, hint: "Upload customer's profile image"
     end
     f.actions
   end
@@ -42,6 +50,13 @@ ActiveAdmin.register Customer do
   # Configure show page
   show title: :full_name do
     attributes_table do
+      row "Profile Image" do |customer|
+        if customer.image.attached?
+          image_tag customer.image, style: "width: 150px; height: 150px; object-fit: cover; border-radius: 10px;"
+        else
+          span "No image uploaded", class: "empty"
+        end
+      end
       row "Full Name" do |customer|
         strong customer.full_name
       end
