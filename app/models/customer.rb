@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Customer < ApplicationRecord
   has_one_attached :image
 
@@ -7,7 +9,7 @@ class Customer < ApplicationRecord
 
   # Allowlist associations for Ransack (ActiveAdmin filtering)
   def self.ransackable_associations(auth_object = nil)
-    [ "image_attachment", "image_blob" ]
+    []
   end
 
   # Allowlist attributes for Ransack (ActiveAdmin filtering)

@@ -1,4 +1,5 @@
-# frozen_string_literal: true
+# encoding: utf-8
+
 ActiveAdmin.register_page "Dashboard" do
   menu priority: 1, label: proc { I18n.t("active_admin.dashboard") }
 
@@ -10,24 +11,47 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
 
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
+    # Dashboard sections
+    columns do
+      column do
+        panel "Recent Customers" do
+          ul do
+            Customer.order(created_at: :desc).limit(5).each do |customer|
+              li link_to(customer.full_name, admin_customer_path(customer))
+            end
+          end
+        end
+      end
 
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
-  end # content
+      column do
+        panel "Statistics" do
+          para "Total Customers: #{Customer.count}"
+          para "Customers with Email: #{Customer.where.not(email_address: [ nil, '' ]).count}"
+          para "Customers without Email: #{Customer.where(email_address: [ nil, '' ]).count}"
+          para "Total Admin Users: #{AdminUser.count}"
+        end
+      end
+    end
+
+    columns do
+      column do
+        panel "Recent Activity" do
+          para "Recent customers created:"
+          ul do
+            Customer.order(created_at: :desc).limit(3).each do |customer|
+              li "#{customer.full_name} - #{time_ago_in_words(customer.created_at)} ago"
+            end
+          end
+        end
+      end
+
+      column do
+        panel "Quick Actions" do
+          para link_to("View All Customers", admin_customers_path, class: "button")
+          para link_to("Add New Customer", new_admin_customer_path, class: "button")
+          para link_to("Manage Admin Users", admin_admin_users_path, class: "button")
+        end
+      end
+    end
+  end
 end

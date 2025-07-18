@@ -1,6 +1,21 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+  # Add CSV format support for ActiveAdmin
+  namespace :admin do
+    resources :customers, only: [ :index ] do
+      collection do
+        get :index, format: :csv
+      end
+    end
+    resources :admin_users, only: [ :index ] do
+      collection do
+        get :index, format: :csv
+      end
+    end
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

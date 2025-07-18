@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class CustomersController < ApplicationController
   def index
     @customers = Customer.all
@@ -5,11 +7,9 @@ class CustomersController < ApplicationController
 
   def alphabetized
     @customers = Customer.order(:full_name)
-    render :index
   end
 
   def missing_email
     @customers = Customer.where(email_address: [ nil, "" ])
-    render :index
   end
 end

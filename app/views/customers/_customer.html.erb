@@ -1,18 +1,14 @@
-customers/_customer.html.erb
+<%# encoding: utf-8 %>
 <div class="card" style="margin-bottom: 20px;">
   <div class="card-content">
     <div class="media">
       <div class="media-left">
         <figure class="image is-64x64">
-          <% if customer.image.attached? %>
-            <%= image_tag customer.image, class: "is-rounded" %>
-          <% else %>
-            <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
-              <span class="icon is-large">
-                <i class="fas fa-user fa-2x"></i>
-              </span>
-            </div>
-          <% end %>
+          <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+            <span class="icon is-large">
+              <i class="fas fa-user fa-2x"></i>
+            </span>
+          </div>
         </figure>
       </div>
       <div class="media-content">

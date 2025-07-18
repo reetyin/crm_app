@@ -23,5 +23,11 @@ module CrmApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Configure encoding
+    config.encoding = "utf-8"
+
+    # Set default locale
+    config.i18n.default_locale = :en
   end
 end

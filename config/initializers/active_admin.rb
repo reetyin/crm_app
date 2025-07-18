@@ -4,12 +4,12 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "Crm App"
+  config.site_title = "CRM Admin Panel"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
-  # config.site_title_link = "/"
+  config.site_title_link = "/"
 
   # Set an optional image to be displayed for the header
   # instead of a string (overrides :site_title)
@@ -174,7 +174,7 @@ ActiveAdmin.setup do |config|
   # You can exclude possibly sensitive model attributes from being displayed,
   # added to forms, or exported by default by ActiveAdmin
   #
-  config.filter_attributes = [:encrypted_password, :password, :password_confirmation]
+  config.filter_attributes = [ :encrypted_password, :password, :password_confirmation ]
 
   # == Localize Date/Time Format
   #
@@ -186,6 +186,11 @@ ActiveAdmin.setup do |config|
   # available formats in your application.
   #
   config.localize_format = :long
+
+  # Force English locale for admin interface
+  config.before_action do
+    I18n.locale = :en
+  end
 
   # == Setting a Favicon
   #
@@ -240,6 +245,13 @@ ActiveAdmin.setup do |config|
   #
   # Force the use of quotes
   # config.csv_options = { force_quotes: true }
+
+  # Configure CSV export with UTF-8 encoding
+  config.csv_options = {
+    encoding: "UTF-8",
+    col_sep: ",",
+    force_quotes: true
+  }
 
   # == Menu System
   #
@@ -349,4 +361,11 @@ ActiveAdmin.setup do |config|
   # You can switch to using Webpacker here.
   #
   # config.use_webpacker = true
+
+  # == Disable Download Links
+  #
+  # Disable CSV download links globally to prevent routing errors
+  config.namespace :admin do |admin|
+    admin.download_links = false
+  end
 end

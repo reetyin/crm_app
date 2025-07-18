@@ -1,2 +1,17 @@
+<%# encoding: utf-8 %>
 <!-- filepath: app/views/customers/alphabetized.html.erb -->
-<%= render 'index' %>
+<div class="container">
+  <h1 class="title">Customers Alphabetized</h1>
+  <div class="buttons">
+    <%= link_to "All Customers", customers_path, class: "button is-info" %>
+    <%= link_to "Missing Email View", customers_missing_email_path, class: "button is-warning" %>
+  </div>
+  <% @customers.each do |customer| %>
+    <%= render partial: "customer", locals: { customer: customer } %>
+  <% end %>
+  <div class="buttons" style="margin-top: 20px;">
+    <%= link_to "All Customers", customers_path, class: "button is-info" %>
+    <%= link_to "Alphabetized View", customers_alphabetized_path, class: "button is-primary" %>
+    <%= link_to "Missing Email View", customers_missing_email_path, class: "button is-warning" %>
+  </div>
+</div>
