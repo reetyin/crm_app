@@ -29,14 +29,11 @@ Rails.application.config.to_prepare do
       ActiveStorage::Attached::One.class_eval do
         def attached?
           begin
-            super
-          rescue ActiveRecord::InverseOfAssociationNotFoundError
-            # Fallback: check if attachment exists in database
+            # Check if attachment exists in database directly
             ActiveStorage::Attachment.exists?(name: name, record: record)
           rescue StandardError => e
             Rails.logger.warn "ActiveStorage attached? error: #{e.message}"
-            # Fallback: check if attachment exists in database
-            ActiveStorage::Attachment.exists?(name: name, record: record)
+            false
           end
         end
       end
@@ -68,6 +65,11 @@ Rails.application.config.to_prepare do
               # Create a working attachment object
               ActiveStorage::Attached::One.new(name, self)
             end
+          end
+          
+          # Define the attachment method that Active Admin expects
+          define_method("#{name}_attachment") do
+            send(name)
           end
         end
       end
