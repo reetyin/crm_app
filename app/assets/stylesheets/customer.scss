@@ -65,6 +65,17 @@
   }
 }
 
+.image-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+}
+
 // Typography
 .title.is-4 {
   margin-bottom: 0.5rem;

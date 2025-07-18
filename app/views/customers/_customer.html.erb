@@ -1,21 +1,21 @@
 <%# encoding: utf-8 %>
-<div class="card" style="margin-bottom: 20px;">
+<div class="card">
   <div class="card-content">
     <div class="media">
       <div class="media-left">
         <figure class="image is-64x64">
           <% if customer.image_attached_safely? %>
             <% begin %>
-              <%= image_tag customer.image, class: "is-rounded", style: "width: 64px; height: 64px; object-fit: cover;" %>
+              <%= image_tag customer.image %>
             <% rescue StandardError %>
-              <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+              <div class="image-placeholder">
                 <span class="icon is-large">
                   <i class="fas fa-exclamation-triangle fa-2x has-text-warning"></i>
                 </span>
               </div>
             <% end %>
           <% else %>
-            <div class="has-background-grey-lighter is-rounded" style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+            <div class="image-placeholder">
               <span class="icon is-large">
                 <i class="fas fa-user fa-2x"></i>
               </span>
